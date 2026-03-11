@@ -10,6 +10,7 @@ export const addLoan = async (item:LoanCreateRequest): Promise<string> => {
 
     const itemEntity: Loan = {
         applicant: item.applicant,
+        amount: item.amount,
         status: item.status,
         createdAt: new Date()
     }
@@ -62,6 +63,7 @@ export const updateLoans = async (id: string , item: LoanCreateRequest): Promise
 
     await docRef.update({
         applicant: item.applicant,
+        amount: item.amount,
         status: item.status
     });
     return;
