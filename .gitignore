@@ -1,0 +1,6 @@
+node_modules/
+dist/
+productKey.json
+# Logs
+logs/
+*.log
