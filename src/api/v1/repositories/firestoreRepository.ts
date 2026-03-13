@@ -6,7 +6,7 @@ import { LoanDTO } from "../models/loanDTO";
 
 export const addLoan = async (item:LoanCreateRequest): Promise<string> => {
 
-    const docRef: DocumentReference = db.collection("loans").doc();
+    const docRef: DocumentReference = db.collection("loans").doc("5");
 
     const itemEntity: Loan = {
         applicant: item.applicant,
