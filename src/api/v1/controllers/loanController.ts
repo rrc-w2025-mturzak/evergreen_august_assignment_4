@@ -37,8 +37,8 @@ export const getLoanById = async (req: Request, res: Response) => {
 
 export const getAllLoan = async (req: Request, res: Response) => {
     try {
-        const Loans = await getAllLoans();
-        res.status(HTTP_STATUS.OK).json(successResponse(Loans, "Loans retrieved"))
+        const loans = await getAllLoans() ?? [];
+        res.status(HTTP_STATUS.OK).json({ message: "Loan applications retrieved", count: loans.length, data: loans });
     } catch (error) {
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error"})
     }

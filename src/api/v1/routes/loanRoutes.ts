@@ -13,7 +13,7 @@ import isAuthorized from "../middleware/authorize";
 const loanRouter: Router = express.Router();
 
 loanRouter.get("/health", healthData);
-loanRouter.get("/loans", authenticate, getAllLoan);
+loanRouter.get("/loans", authenticate, isAuthorized({ hasRole: ["admin", "officer"], allowSameUser: true}), getAllLoan);
 loanRouter.get("/loans/:id", authenticate, validateRequest(postSchemas.getById), getLoanById);
 loanRouter.post("/loans", authenticate, isAuthorized({ hasRole: ["admin"], allowSameUser: true}), validateRequest(postSchemas.create), createLoan);
 loanRouter.put("/loans/:id", authenticate, isAuthorized({ hasRole: ["admin"], allowSameUser: true}),validateRequest(postSchemas.update), updateLoanByIdAsync);
