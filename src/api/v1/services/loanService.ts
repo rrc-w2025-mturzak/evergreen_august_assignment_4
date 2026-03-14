@@ -32,8 +32,5 @@ export const updateLoanById = async (id: string, item: LoanUpdateRequest): Promi
 }
 
 export const deleteLoanById = async (id: string): Promise<void> => {
-    const deleted = await deleteLoan(id);
-    if (!deleted) {
-        throw new LoanNotFoundError(`Loan application not found`);
-    }
+    await deleteLoan(id)
 }

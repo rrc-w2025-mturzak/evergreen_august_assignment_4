@@ -54,17 +54,14 @@ export const updateLoanByIdAsync = async (req: Request, res: Response) => {
     };
 
     await updateLoanById(id, request);
+    let results = await getLoanByIdAsync(id)
 
-    res.status(HTTP_STATUS.NO_CONTENT).send(`Loan ${id} was updated`);
+    res.status(HTTP_STATUS.OK).json(successResponse(results, `Loan application updated`));
 }
 
-export const deleteLoanByIdAsync = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        let id = req.params.id as string;
-        await deleteLoanById(id);
+export const deleteLoanByIdAsync = async (req: Request, res: Response) => {
+    let id = req.params.id as string;
+    await deleteLoanById(id)
 
-        res.status(HTTP_STATUS.NO_CONTENT).send(`Loan ${id} was deleted`);
-    } catch (error) {
-        next(error);
-    }
+    res.status(HTTP_STATUS.NO_CONTENT).send(`Loan ${id} was deleted`);
 }
