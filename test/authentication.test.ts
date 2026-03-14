@@ -72,7 +72,7 @@ describe("Authentication Middleware", () => {
         expect(nextFunction).toHaveBeenCalledWith(expect.any(AuthenticationError));
         const error = nextFunction.mock.calls[0][0] as AuthenticationError;
         expect(error.message).toContain("Unauthorized: ");
-        expect(error.code).toBe("UNKNOWN_ERROR");
+        expect(error.code).toBe("TOKEN_INVALID");
         expect(nextFunction.mock.calls[0].length).toBe(1); // ensure next() was called with an error
     });
 
