@@ -40,10 +40,12 @@ describe("Authentication Middleware", () => {
         );
 
         // Assert
+        expect(nextFunction).toHaveBeenCalledTimes(1);
         expect(nextFunction).toHaveBeenCalledWith(expect.any(AuthenticationError));
         const error = nextFunction.mock.calls[0][0] as AuthenticationError;
         expect(error.message).toContain("Unauthorized: No token provided");
         expect(error.code).toBe("TOKEN_NOT_FOUND");
+        expect(nextFunction.mock.calls[0].length).toBe(1); // ensure next() was called with an error
     });
 
     it("should call next() with AuthenticationError when token is invalid", async () => {
@@ -66,9 +68,12 @@ describe("Authentication Middleware", () => {
 
         // Assert
         expect(auth.verifyIdToken).toHaveBeenCalledWith("invalid-token");
+        expect(nextFunction).toHaveBeenCalledTimes(1);
         expect(nextFunction).toHaveBeenCalledWith(expect.any(AuthenticationError));
         const error = nextFunction.mock.calls[0][0] as AuthenticationError;
         expect(error.message).toContain("Unauthorized: ");
+        expect(error.code).toBe("UNKNOWN_ERROR");
+        expect(nextFunction.mock.calls[0].length).toBe(1); // ensure next() was called with an error
     });
 
     it("should call next() with AuthenticationError when authorization header is malformed", async () => {
@@ -151,6 +156,7 @@ describe("Authentication Middleware", () => {
             uid: "user123",
             role: "admin",
         });
-        expect(nextFunction).toHaveBeenCalled();
+        expect(nextFunction).toHaveBeenCalledTimes(1);
+        expect(nextFunction).toHaveBeenCalledWith();
     });
 });
