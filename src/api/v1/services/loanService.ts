@@ -2,6 +2,7 @@ import { addLoan, getLoanById, getLoans, updateLoans, deleteLoan } from "../repo
 import { LoanReponse } from "../models/loanResponse";
 import { LoanCreateRequest } from "../models/loanCreateRequestModel";
 import { LoanDTO } from "../models/loanDTO";
+import { DeletionError } from "../errors/errors";
 
 export const createNewLoan =  async (item: LoanCreateRequest): Promise<string> => {
     return await addLoan(item); 
@@ -25,5 +26,8 @@ export const updateLoanById = async (id: string, item: LoanCreateRequest): Promi
 }
 
 export const deleteLoanById = async (id: string): Promise<void> => {
-    await deleteLoan(id)
+    const deleted = await deleteLoan(id);
+    if (!deleted) {
+        throw new DeletionError(`Loan application not found`);
+    }
 }

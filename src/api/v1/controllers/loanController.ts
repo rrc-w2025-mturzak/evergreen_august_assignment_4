@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { successResponse } from "../models/responseModel";
 import { createNewLoan, getLoanByIdAsync, getAllLoans, updateLoanById, deleteLoanById } from "../services/loanService";
@@ -57,9 +57,13 @@ export const updateLoanByIdAsync = async (req: Request, res: Response) => {
     res.status(HTTP_STATUS.NO_CONTENT).send(`Loan ${id} was updated`);
 }
 
-export const deleteLoanByIdAsync = async (req: Request, res: Response) => {
-    let id = req.params.id as string;
-    await deleteLoanById(id)
+export const deleteLoanByIdAsync = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        let id = req.params.id as string;
+        await deleteLoanById(id);
 
-    res.status(HTTP_STATUS.NO_CONTENT).send(`Loan ${id} was deleted`);
+        res.status(HTTP_STATUS.NO_CONTENT).send(`Loan ${id} was deleted`);
+    } catch (error) {
+        next(error);
+    }
 }

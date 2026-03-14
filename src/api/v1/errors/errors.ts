@@ -88,3 +88,18 @@ export class AuthorizationError extends AppError {
         super(message, code, statusCode);
     }
 }
+
+/**
+ * Class representing an deletion error.
+ * Extends AppError to include role-based access control errors.
+ * Used for non-existant attempts to delete loan records.
+ */
+export class DeletionError extends AppError {
+    constructor(
+        message: string,
+        code: string = "LOAN_NOT_FOUND",
+        statusCode: number = HTTP_STATUS.NOT_FOUND
+    ) {
+        super(message, code, statusCode);
+    }
+}

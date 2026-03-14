@@ -69,9 +69,15 @@ export const updateLoans = async (id: string , item: LoanCreateRequest): Promise
     return;
 };
 
-export const deleteLoan = async (id: string): Promise<void> => {
-
+export const deleteLoan = async (id: string): Promise<boolean> => {
     const docRef: DocumentReference = db.collection("loans").doc(id);
+    
+    const doc = await docRef.get();
+
+        if (!doc.exists) {
+        return false; 
+    }
 
     await docRef.delete();
+    return true
 };
