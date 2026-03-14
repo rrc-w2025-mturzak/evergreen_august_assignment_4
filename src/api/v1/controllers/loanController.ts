@@ -3,6 +3,7 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { successResponse } from "../models/responseModel";
 import { createNewLoan, getLoanByIdAsync, getAllLoans, updateLoanById, deleteLoanById } from "../services/loanService";
 import { LoanCreateRequest } from "../models/loanCreateRequestModel";
+import { LoanUpdateRequest } from "../models/loanUpdateRequestModel";
 
 export const healthData = (req: Request, res: Response) => {
     res.status(HTTP_STATUS.OK).json({
@@ -46,13 +47,13 @@ export const getAllLoan = async (req: Request, res: Response) => {
 
 export const updateLoanByIdAsync = async (req: Request, res: Response) => {
     let id: string = req.params.id as string; 
-    let request: LoanCreateRequest = {
+    const request: LoanUpdateRequest = {
         applicant: req.body.applicant,
         amount: req.body.amount,
         status: req.body.status
-    }
+    };
 
-    await updateLoanById(id, request)
+    await updateLoanById(id, request);
 
     res.status(HTTP_STATUS.NO_CONTENT).send(`Loan ${id} was updated`);
 }

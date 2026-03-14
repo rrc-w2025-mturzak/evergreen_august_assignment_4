@@ -1,6 +1,7 @@
 import { addLoan, getLoanById, getLoans, updateLoans, deleteLoan } from "../repositories/firestoreRepository";
 import { LoanReponse } from "../models/loanResponse";
 import { LoanCreateRequest } from "../models/loanCreateRequestModel";
+import { LoanUpdateRequest } from "../models/loanUpdateRequestModel";
 import { LoanDTO } from "../models/loanDTO";
 import { LoanNotFoundError } from "../errors/errors";
 
@@ -25,7 +26,7 @@ export const getAllLoans = async (): Promise<Array<LoanDTO> | undefined> => {
     return await getLoans();
 }
 
-export const updateLoanById = async (id: string, item: LoanCreateRequest): Promise<void> => {
+export const updateLoanById = async (id: string, item: LoanUpdateRequest): Promise<void> => {
     await updateLoans(id, item);
     return;
 }

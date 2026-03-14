@@ -42,15 +42,15 @@ export const postSchemas = {
             }),
         }),
         body: Joi.object({
-            applicant: Joi.string().required().messages({
+            applicant: Joi.string().optional().messages({
                 "any.required": "Loan applicant is required",
                 "string.empty": "Loan applicant cannot be empty",
             }),
-            amount: Joi.number().required().messages({
+            amount: Joi.number().optional().messages({
                 "any.required": "Loan amount is required",
                 "string.empty": "Loan amount cannot be empty",
             }),
-            status: Joi.string().required().messages({
+            status: Joi.string().optional().messages({
                 "any.required": "status is required",
                 "string.empty": "status cannot be empty",
             }),
