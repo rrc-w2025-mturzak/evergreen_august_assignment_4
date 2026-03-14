@@ -2,17 +2,22 @@ import { addLoan, getLoanById, getLoans, updateLoans, deleteLoan } from "../repo
 import { LoanReponse } from "../models/loanResponse";
 import { LoanCreateRequest } from "../models/loanCreateRequestModel";
 import { LoanDTO } from "../models/loanDTO";
-import { DeletionError } from "../errors/errors";
+import { LoanNotFoundError } from "../errors/errors";
 
 export const createNewLoan =  async (item: LoanCreateRequest): Promise<string> => {
     return await addLoan(item); 
 }
 
 export const getLoanByIdAsync = async (id: string): Promise<LoanReponse> => {
-    let entity = await getLoanById(id);
+    const entity = await getLoanById(id);
+
+    if (!entity) {
+        throw new LoanNotFoundError(`Loan application not found`);
+    }
+
     return {
-        id: entity?.id,
-        applicant: entity?.applicant
+        id: entity.id,
+        applicant: entity.applicant
     };
 }
 
@@ -28,6 +33,6 @@ export const updateLoanById = async (id: string, item: LoanCreateRequest): Promi
 export const deleteLoanById = async (id: string): Promise<void> => {
     const deleted = await deleteLoan(id);
     if (!deleted) {
-        throw new DeletionError(`Loan application not found`);
+        throw new LoanNotFoundError(`Loan application not found`);
     }
 }

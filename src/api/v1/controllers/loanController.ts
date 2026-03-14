@@ -24,14 +24,14 @@ export const createLoan = async (req: Request, res: Response) => {
     res.status(HTTP_STATUS.CREATED).send(result)
 }
 
-export const getLoanById = async (req: Request, res: Response) => {
+export const getLoanById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         let id = req.params.id as string;
         let results = await getLoanByIdAsync(id)
 
         res.status(HTTP_STATUS.OK).json(successResponse(results, "Loan retrieved"))
     } catch (error) {
-        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error"})
+        next(error);
     }
 }
 
